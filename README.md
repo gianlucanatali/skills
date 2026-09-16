@@ -1,140 +1,86 @@
 # Skills
 
-Reusable agent skills for development, testing, releases, and naming.
-Pick the workflows you need, read their instructions, and adapt them to your project.
+Prefer established upstream skills for common tasks. This repository contains only a
+small naming-screening add-on, not a general development toolkit.
 
-Each skill uses the open [Agent Skills format](https://agentskills.io): a
-`skills/<name>/SKILL.md` entry point with optional scripts and templates.
-The collection works with compatible agents, including Claude Code and Codex.
-Some instructions are in Italian.
+## Included skill
 
-## Install
+| Skill | What it does | What it needs |
+| --- | --- | --- |
+| [screen-project-names](skills/screen-project-names/SKILL.md) | Checks a naming shortlist for existing uses and possible trademark conflicts; reports dated evidence and unchecked areas instead of claiming a name is legally safe. | Web access for current checks; product category and target markets for scoped trademark research. |
 
-With Node.js installed, choose skills and agents interactively:
+This is a preliminary research workflow, not legal clearance. It has been reviewed
+for instruction coverage and independently exercised on three synthetic scenarios,
+with a fresh retest after a source-link omission. This is not a broad behavioral benchmark.
+For generating names, use the upstream naming skill below. The add-on can screen
+names supplied by a user without another skill.
 
-```bash
-npx skills@latest add gianlucanatali/skills
-```
+## Install and use
 
-Preview the catalog without installing:
-
-```bash
-npx skills@latest add gianlucanatali/skills --list
-```
-
-Install a single skill in the current project:
+Requires Node.js. Install just the add-on for your agent:
 
 ```bash
-npx skills@latest add gianlucanatali/skills --skill contextual-naming --agent codex
+npx skills@latest add gianlucanatali/skills --skill screen-project-names --agent codex
+# Or:
+npx skills@latest add gianlucanatali/skills --skill screen-project-names --agent claude-code
 ```
 
-Or install for Claude Code across projects:
+Add `--global` for a user-level installation; omit it for the current project.
+Preview with `npx skills@latest add gianlucanatali/skills --list`.
+Update Skills CLI installations with `npx skills@latest update`.
+
+Example: “Use screen-project-names to check these three names for a developer tool
+marketed in the EU and US. Separate existing-use evidence from unverified trademark status.”
+
+If asked to generate ideas too, the add-on first loads the installed
+`domain-name-brainstormer` skill. It stops with setup guidance if that prerequisite
+is missing. Dependencies are not installed automatically.
+
+## Use upstream for these tasks
+
+These are recommendations, not copies bundled with this repo. Read their instructions
+and prerequisites before installing; provider-specific tools and permissions still apply.
+
+| Task | Upstream skill or tool | Why use it |
+| --- | --- | --- |
+| Diagnose difficult bugs | [Matt Pocock: diagnosing-bugs](https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnosing-bugs) | Builds a reproducible feedback loop, tests hypotheses, and verifies the original failure. |
+| Review code against requirements and standards | [Matt Pocock: code-review](https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review) | Separates specification compliance from code standards; requires its documented tracker setup. |
+| Write agent instructions | [Matt Pocock: writing-for-agents](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents) | Covers triggering, progressive disclosure, completion criteria, and pruning. |
+| Find stale documentation | [GitHub: docs-sync-audit](https://github.com/github/awesome-copilot/tree/main/skills/docs-sync-audit) | Includes a checker for broken links and documented commands; prose still needs review. |
+| Inspect failing GitHub Actions checks | [OpenAI: gh-fix-ci](https://github.com/openai/skills/tree/main/skills/.curated/gh-fix-ci) | Includes check/log retrieval and an approval boundary before fixes. |
+| Create Playwright tests | [Microsoft: Playwright test agents](https://playwright.dev/docs/test-agents) | Maintainer-provided planning and browser-observed generation. Agent definitions, not a normal skill package. |
+| Run existing Playwright tests | [Playwright CLI](https://playwright.dev/docs/test-cli) | Use the project's configured runner and reports; no extra skill needed. |
+| Release Expo apps | [Expo: eas-app-stores](https://github.com/expo/skills/tree/main/plugins/expo/skills/eas-app-stores) | Maintainer instructions for builds, signing, versions, and submission. |
+| Set up Git worktrees | [Superpowers: using-git-worktrees](https://github.com/obra/superpowers/tree/main/skills/using-git-worktrees) | Handles existing isolation, harness-native worktrees, setup and baseline checks. Put application-specific ports and databases in project scripts. |
+| Audit browser accessibility | [Chrome DevTools: a11y-debugging](https://github.com/ChromeDevTools/chrome-devtools-mcp/tree/main/skills/a11y-debugging) | Browser accessibility tree, Lighthouse, keyboard, focus and contrast checks. Requires Chrome DevTools MCP; not a conformance guarantee. |
+| Draft release notes | [Composio: changelog-generator](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/changelog-generator) | Covers version ranges, user-facing categories and existing style guidance. |
+| Brainstorm names | [Composio: domain-name-brainstormer](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/domain-name-brainstormer) | Generates naming ideas; independently verify any availability claims. |
+
+Examples using the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-npx skills@latest add gianlucanatali/skills --skill contextual-naming --agent claude-code --global
+npx skills@latest add mattpocock/skills --skill diagnosing-bugs --agent codex
+npx skills@latest add mattpocock/skills --skill writing-for-agents --agent codex
+npx skills@latest add github/awesome-copilot --skill docs-sync-audit --agent codex
+npx skills@latest add ChromeDevTools/chrome-devtools-mcp --skill a11y-debugging --agent codex
+npx skills@latest add ComposioHQ/awesome-claude-skills --skill domain-name-brainstormer --agent codex
 ```
 
-Update Skills CLI installations:
+Replace `codex` with `claude-code` for that agent. Preview any source with
+`npx skills@latest add OWNER/REPO --list` and select only what you need.
+For Playwright agents, use the linked official setup rather than Skills CLI.
 
-```bash
-npx skills@latest update
-```
+## Migrating from the initial catalog
 
-These commands use the [Skills CLI](https://github.com/vercel-labs/skills).
-For clients without an installer, copy the selected skill directory, including
-its supporting files, into the client's documented skills directory.
+The initial 22-skill catalog was too broad. Its general-purpose workflows are no
+longer bundled; use the upstream recommendations above. The old `contextual-naming`
+entry is replaced by the narrower `screen-project-names` add-on.
+Updating does not necessarily remove previously installed skills or rename them.
+Review and remove obsolete installations explicitly; this repo does not change them for you.
 
-### GitHub CLI alternative
+## License and attribution
 
-If your GitHub CLI supports `gh skill`:
-
-```bash
-gh skill install gianlucanatali/skills contextual-naming --agent codex
-gh skill update --all
-```
-
-Use `gh skill install --help` for available agents and scopes.
-Choose one installer to avoid duplicate installations.
-
-## Use
-
-Ask for the task normally, or name the skill explicitly using your client's
-invocation syntax, such as `$contextual-naming` in Codex or
-`/contextual-naming` in Claude Code.
-
-Examples:
-
-- “Use contextual-naming to suggest five names for my session archive tool.”
-- “Use debug-ci-failure to diagnose this failing CI run.”
-- “Use usability-audit to review this application.”
-
-Read a skill before using it. Skills are instructions, not preconfigured services:
-some need GitHub access, local databases, browsers, or other tools. Release and
-Git workflows can modify repositories and must follow the approvals described
-in their instructions. The upstream-contribution workflows require an explicitly
-configured worker host and outbox; no infrastructure is supplied by this repo.
-
-## Catalog
-
-### Development and collaboration
-
-| Skill | Purpose |
-| --- | --- |
-| [contextual-naming](skills/contextual-naming/SKILL.md) | Invent names and screen for existing uses. |
-| [context-doctor](skills/context-doctor/SKILL.md) | Review agent instructions for clarity and consistency. |
-| [debug-ci-failure](skills/debug-ci-failure/SKILL.md) | Diagnose infrastructure and application CI failures. |
-| [start-isolated-worktree](skills/start-isolated-worktree/SKILL.md) | Prepare an isolated development worktree and stack. |
-| [prune-dev-branches-and-worktrees](skills/prune-dev-branches-and-worktrees/SKILL.md) | Inventory and clean up merged development work. |
-| [allineami-a](skills/allineami-a/SKILL.md) | Align a contributor branch with reviewed changes. |
-| [pull-contributor](skills/pull-contributor/SKILL.md) | Bring contributor changes into a review workflow. |
-| [push-to-dev](skills/push-to-dev/SKILL.md) | Return reviewed changes to a contributor branch. |
-| [push-workdir](skills/push-workdir/SKILL.md) | Sync a scratch workspace to a configured notes repository. |
-
-### Testing and releases
-
-| Skill | Purpose |
-| --- | --- |
-| [e2e-test](skills/e2e-test/SKILL.md) | Write Playwright tests from observed behavior. |
-| [run-e2e](skills/run-e2e/SKILL.md) | Run and triage end-to-end tests. |
-| [usability-audit](skills/usability-audit/SKILL.md) | Check accessibility and interactive UI behavior. |
-| [compat-gate](skills/compat-gate/SKILL.md) | Compare compatibility in isolated environments. |
-| [consolidate-migrations](skills/consolidate-migrations/SKILL.md) | Consolidate development database migrations. |
-| [mobile-release](skills/mobile-release/SKILL.md) | Follow an Expo/EAS release workflow. |
-| [ios-simulator-local-build](skills/ios-simulator-local-build/SKILL.md) | Build and exercise an app in the iOS simulator. |
-| [promote-to-prod](skills/promote-to-prod/SKILL.md) | Promote releases across configured repository boundaries. |
-| [update-release-notes](skills/update-release-notes/SKILL.md) | Write user-facing release notes from changes. |
-
-### Upstream contributions
-
-| Skill | Purpose |
-| --- | --- |
-| [work-on-oss-projects](skills/work-on-oss-projects/SKILL.md) | Coordinate review of prepared upstream contributions. |
-| [oss-fetch-from-fleet](skills/oss-fetch-from-fleet/SKILL.md) | Fetch contribution branches and manifests. |
-| [oss-review-contribution](skills/oss-review-contribution/SKILL.md) | Review code and proposed public replies. |
-| [oss-publish-contribution](skills/oss-publish-contribution/SKILL.md) | Publish explicitly approved contributions. |
-
-### Upstream prerequisites
-
-Two entries are thin extensions, not standalone implementations:
-
-- `mobile-release` builds on [Expo's eas-app-stores](https://github.com/expo/skills/tree/main/plugins/expo/skills/eas-app-stores). Install the official collection with `npx skills@latest add expo/skills` and select the release skill and its documented prerequisites.
-- `e2e-test` builds on [Microsoft's Playwright test agents](https://playwright.dev/docs/test-agents). Follow their project setup instructions for your harness; these are agent definitions, not a Skills CLI dependency.
-
-Install prerequisites separately. Each extension instructs the agent to load the
-upstream instructions first and stop with setup guidance when they are unavailable.
-Dependency installation and agent invocation are not automatic or universal.
-No upstream implementation is copied into this repository.
-
-## Contributing
-
-Keep skills focused, document required configuration, and use synthetic fixtures.
-Validate behavioral changes with relevant tests.
-
-## License
-
-No license has been selected yet. Public visibility does not grant a general
-open-source license; check with the owner before redistribution or reuse beyond
-applicable permissions.
-
+No license has been selected for the original material in this repository.
+Upstream projects retain their own licenses; their implementations are not copied here.
 The installation-and-catalog presentation is inspired by
-[Matt Pocock's skills collection](https://github.com/mattpocock/skills).
+[Matt Pocock's collection](https://github.com/mattpocock/skills), with original prose.
