@@ -1,26 +1,31 @@
 # Skills
 
-Prefer established upstream skills for common tasks. This repository contains only a
-small naming-screening add-on, not a general development toolkit.
+Small, original add-ons for gaps that established skills do not cover well. Prefer an
+authoritative upstream skill when it already fits the job.
 
-## Included skill
+## Included skills
 
 | Skill | What it does | What it needs |
 | --- | --- | --- |
-| [screen-project-names](skills/screen-project-names/SKILL.md) | Checks a naming shortlist for existing uses and possible trademark conflicts; reports dated evidence and unchecked areas instead of claiming a name is legally safe. | Web access for current checks; product category and target markets for scoped trademark research. |
+| [screen-project-names](skills/product/screen-project-names/SKILL.md) | Checks a naming shortlist for existing uses and possible trademark conflicts; reports dated evidence and unchecked areas instead of claiming a name is legally safe. | Web access for current checks; product category and target markets for scoped trademark research. |
+| [contribute-to-upstream](skills/oss/contribute-to-upstream/SKILL.md) | Prepares a maintainer-ready OSS contribution from the target repository's actual rules, local conventions, and evidence. | A selected repository and scoped issue or agreed problem. |
 
-This is a preliminary research workflow, not legal clearance. It has been reviewed
-for instruction coverage and independently exercised on three synthetic scenarios,
-with a fresh retest after a source-link omission. This is not a broad behavioral benchmark.
-For generating names, use the upstream naming skill below. The add-on can screen
-names supplied by a user without another skill.
+Skills are grouped by domain (`product`, `oss`), then kept one focused capability per leaf folder.
+The category is for discovery; the skill's name and description remain the installation and
+selection contract.
+
+`screen-project-names` is a preliminary research workflow, not legal clearance. It has been
+reviewed for instruction coverage and independently exercised on three synthetic scenarios, with
+a fresh retest after a source-link omission. This is not a broad behavioral benchmark. For
+generating names, use the upstream naming skill below. The add-on can screen names supplied by a
+user without another skill.
 
 ## Install and use
 
 Requires Node.js. Install just the add-on for your agent:
 
 ```bash
-npx skills@latest add gianlucanatali/skills --skill screen-project-names --agent codex
+npx skills@latest add gianlucanatali/skills --skill contribute-to-upstream --agent codex
 # Or:
 npx skills@latest add gianlucanatali/skills --skill screen-project-names --agent claude-code
 ```
@@ -29,12 +34,18 @@ Add `--global` for a user-level installation; omit it for the current project.
 Preview with `npx skills@latest add gianlucanatali/skills --list`.
 Update Skills CLI installations with `npx skills@latest update`.
 
-Example: “Use screen-project-names to check these three names for a developer tool
-marketed in the EU and US. Separate existing-use evidence from unverified trademark status.”
+Examples:
 
-If asked to generate ideas too, the add-on first loads the installed
-`domain-name-brainstormer` skill. It stops with setup guidance if that prerequisite
-is missing. Dependencies are not installed automatically.
+- “Use screen-project-names to check these three names for a developer tool marketed in the EU and US. Separate existing-use evidence from unverified trademark status.”
+- “Use contribute-to-upstream for issue #123 in this repository. Read its contribution rules and local test conventions, make the smallest justified change, and give me the contribution brief. Do not open a pull request.”
+
+If asked to generate names too, `screen-project-names` first loads the installed
+`domain-name-brainstormer` skill. It stops with setup guidance if that prerequisite is
+missing. Dependencies are not installed automatically.
+
+`contribute-to-upstream` intentionally stops short of selecting issues, coordinating
+workers, or publishing under a personal identity. Those are separate concerns and should
+remain in project or private configuration.
 
 ## Use upstream for these tasks
 
@@ -55,12 +66,14 @@ and prerequisites before installing; provider-specific tools and permissions sti
 | Audit browser accessibility | [Chrome DevTools: a11y-debugging](https://github.com/ChromeDevTools/chrome-devtools-mcp/tree/main/skills/a11y-debugging) | Browser accessibility tree, Lighthouse, keyboard, focus and contrast checks. Requires Chrome DevTools MCP; not a conformance guarantee. |
 | Draft release notes | [Composio: changelog-generator](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/changelog-generator) | Covers version ranges, user-facing categories and existing style guidance. |
 | Brainstorm names | [Composio: domain-name-brainstormer](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/domain-name-brainstormer) | Generates naming ideas; independently verify any availability claims. |
+| Learn OSS contribution basics | [OSS-Skills: oss-contribute](https://github.com/chiruu12/OSS-Skills/tree/main/oss-contribute) | An MIT-licensed, educational workflow for people learning to contribute. |
 
 Examples using the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
 npx skills@latest add mattpocock/skills --skill diagnosing-bugs --agent codex
 npx skills@latest add mattpocock/skills --skill writing-for-agents --agent codex
+npx skills@latest add gianlucanatali/skills --skill contribute-to-upstream --agent codex
 npx skills@latest add github/awesome-copilot --skill docs-sync-audit --agent codex
 npx skills@latest add ChromeDevTools/chrome-devtools-mcp --skill a11y-debugging --agent codex
 npx skills@latest add ComposioHQ/awesome-claude-skills --skill domain-name-brainstormer --agent codex
@@ -72,9 +85,11 @@ For Playwright agents, use the linked official setup rather than Skills CLI.
 
 ## Migrating from the initial catalog
 
-The initial 22-skill catalog was too broad. Its general-purpose workflows are no
-longer bundled; use the upstream recommendations above. The old `contextual-naming`
-entry is replaced by the narrower `screen-project-names` add-on.
+The initial 22-skill catalog was too broad. Its general-purpose workflows are no longer
+bundled; use the upstream recommendations above. The old `contextual-naming` entry is
+replaced by the narrower `screen-project-names` add-on. The OSS workflow was reconsidered:
+the reusable upstream-facing core is now `contribute-to-upstream`; personal worker,
+approval, and publishing adapters are deliberately not public.
 Updating does not necessarily remove previously installed skills or rename them.
 Review and remove obsolete installations explicitly; this repo does not change them for you.
 
