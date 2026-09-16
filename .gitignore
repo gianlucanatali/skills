@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.claude-skills.json
+.codex/config.toml
+.mcp.json
+node_modules/
+.venv/
+_local/
+test-results/
+playwright-report/
